@@ -31,6 +31,7 @@ class AdminUserController extends Controller
         return view('admin.users.index', [
             'users' => User::query()->latest()->get(),
             'departments' => self::DEPARTMENTS,
+            'policy' => $this->passwordPolicyService->activePolicy(),
         ]);
     }
 
@@ -56,6 +57,7 @@ class AdminUserController extends Controller
             'password_changed_at' => null,
             'failed_login_attempts' => 0,
             'locked_until' => null,
+            'two_factor_enabled' => true,
         ]);
 
         $status = 'User created successfully. Credentials email sent.';

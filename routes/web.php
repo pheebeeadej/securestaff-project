@@ -16,6 +16,9 @@ Route::get('/', fn () => redirect()->route('login'));
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
+    Route::get('/login/2fa', [AuthController::class, 'showTwoFactorChallenge'])->name('auth.2fa.challenge');
+    Route::post('/login/2fa', [AuthController::class, 'verifyTwoFactorChallenge'])->name('auth.2fa.verify');
+    Route::post('/login/2fa/resend', [AuthController::class, 'resendTwoFactorCode'])->name('auth.2fa.resend');
 });
 
 Route::middleware(['auth', 'password.changed'])->group(function () {
@@ -30,6 +33,7 @@ Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
     Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/security/2fa', [ProfileController::class, 'updateTwoFactor'])->name('profile.security.2fa');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

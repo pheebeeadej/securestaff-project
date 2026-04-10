@@ -4,6 +4,5 @@ Name: Admin User
 Role: admin
 Department: IT
 
-
+adejumohtoheebpheebee@gmail.com
 admin@securestaff.test / Password@123
-admin@gmail.com / 12345678

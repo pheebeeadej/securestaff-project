@@ -268,6 +268,45 @@ th {
     border-radius: 10px;
 }
 
+.password-field {
+    position: relative;
+}
+
+.password-field input {
+    padding-right: 46px;
+    margin-bottom: 0;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    translate: 0 -50%;
+    border: none;
+    background: transparent;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.password-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.password-field .icon-eye-closed {
+    display: none;
+}
+
+.password-field.is-visible .icon-eye-open {
+    display: none;
+}
+
+.password-field.is-visible .icon-eye-closed {
+    display: block;
+}
+
 .login-screen {
     min-height: 100vh;
     display: grid;

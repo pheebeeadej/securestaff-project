@@ -20,11 +20,11 @@
             @csrf
             <div class="form-group">
                 <label>New password</label>
-                <input id="password" class="form-control" type="password" name="password" data-min-length="{{ $policy->min_length }}" required>
+                <input id="password" class="form-control" type="password" name="password" data-password-toggle="true" data-min-length="{{ $policy->min_length }}" required>
             </div>
             <div class="form-group">
                 <label>Confirm new password</label>
-                <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required>
+                <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" data-password-toggle="true" required>
             </div>
 
             <div class="panel" style="margin-bottom:16px;">

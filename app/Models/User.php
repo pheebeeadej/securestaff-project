@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password_changed_at',
         'failed_login_attempts',
         'locked_until',
+        'two_factor_enabled',
     ];
 
     protected $hidden = [
@@ -32,6 +33,7 @@ class User extends Authenticatable
         'must_change_password' => 'boolean',
         'password_changed_at' => 'datetime',
         'locked_until' => 'datetime',
+        'two_factor_enabled' => 'boolean',
     ];
 
     public function passwordHistories()

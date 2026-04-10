@@ -40,7 +40,7 @@
                 <input type="email" name="email" placeholder="hr.admin@securestaff.test" required>
 
                 <label>Password</label>
-                <input type="password" name="password" placeholder="••••••••••••" required>
+                <input type="password" name="password" placeholder="••••••••••••" data-password-toggle="true" required>
 
                 <button type="submit" class="btn">Login</button>
             </form>
