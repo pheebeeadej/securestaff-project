@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OTPMail;
 use App\Models\SecurityEvent;
 use App\Models\User;
-use App\Notifications\TwoFactorCodeNotification;
 use App\Services\PasswordPolicyService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -170,11 +171,29 @@ class AuthController extends Controller
         $request->session()->put('auth.2fa_expires_at', now()->addMinutes(10)->toIso8601String());
 
         try {
-            $user->notify(new TwoFactorCodeNotification($code));
+            Log::info('mail_2fa_attempt', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+            ]);
+
+            Mail::to($user->email)->send(new OTPMail(
+                otp: $code,
+                title: 'Your SecureStaff login verification code',
+                description: 'Use this one-time password to complete your SecureStaff login.',
+                footer: 'If you did not request this code, please ignore this email or contact support immediately.',
+                name: $user->name,
+                validityTime: 10
+            ));
+
+            Log::info('mail_2fa_sent', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+            ]);
         } catch (\Throwable $exception) {
             Log::error('Unable to send 2FA code email.', [
                 'user_id' => $user->id,
                 'email' => $user->email,
+                'exception' => get_class($exception),
                 'message' => $exception->getMessage(),
             ]);
 

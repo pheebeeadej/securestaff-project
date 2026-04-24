@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\GeneralMail;
 use App\Models\User;
-use App\Notifications\NewUserCredentialsNotification;
 use App\Services\PasswordPolicyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -63,8 +65,46 @@ class AdminUserController extends Controller
         $status = 'User created successfully. Credentials email sent.';
 
         try {
-            $user->notify(new NewUserCredentialsNotification($request->user(), $data['password']));
-        } catch (\Throwable) {
+            Log::info('mail_credentials_attempt', [
+                'created_user_id' => $user->id,
+                'created_user_email' => $user->email,
+                'created_by_user_id' => $request->user()?->id,
+            ]);
+
+            Mail::to($user->email)->send(new GeneralMail(
+                subject: 'Your SecureStaff account details',
+                messageBody: implode("\n", [
+                    'An account has been created for you on SecureStaff.',
+                    'Email: '.$user->email,
+                    'Temporary password: '.$data['password'],
+                    'Role: '.$user->role,
+                    'Department: '.($user->department ?: 'N/A'),
+                    'For security, you must change your password immediately after first login.',
+                    'Created by: '.$request->user()->name,
+                ]),
+                name: $user->name,
+                heading: 'Welcome to SecureStaff',
+                bannerTitle: 'Account Created',
+                bannerSubtitle: 'Your SecureStaff credentials',
+                bannerIcon: '🔐',
+                buttonText: 'Login to SecureStaff',
+                buttonUrl: url('/login')
+            ));
+
+            Log::info('mail_credentials_sent', [
+                'created_user_id' => $user->id,
+                'created_user_email' => $user->email,
+            ]);
+        } catch (\Throwable $exception) {
+            Log::error('Unable to send new user credentials email.', [
+                'created_user_id' => $user->id,
+                'created_user_email' => $user->email,
+                'created_by_user_id' => $request->user()?->id,
+                'created_by_email' => $request->user()?->email,
+                'exception' => get_class($exception),
+                'message' => $exception->getMessage(),
+            ]);
+
             $status = 'User created, but credentials email could not be sent. Check mail settings.';
         }
 
