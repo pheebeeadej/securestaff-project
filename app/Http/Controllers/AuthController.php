@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'email' => 'Your account is temporarily locked. Try again after '.$user->locked_until->format('H:i'),
             ]);
         }
-
+ 
         if (! $user || ! Hash::check($credentials['password'], $user->password)) {
             if ($user) {
                 $user->increment('failed_login_attempts');

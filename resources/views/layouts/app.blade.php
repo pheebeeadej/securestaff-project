@@ -12,7 +12,7 @@
     <div class="shell">
         <aside>
             <div class="brand">
-                <h2>SharpInsights</h2>
+                <h2>SecureStaff</h2>
                 <p class="muted">Employee portal + security policy engine</p>
             </div>
             <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>

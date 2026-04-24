@@ -134,14 +134,18 @@ class PasswordPolicyService
 
     private function prunePasswordHistory(int $userId, int $historyDepth): void
     {
-        $ids = PasswordHistory::query()
+        $keepIds = PasswordHistory::query()
             ->where('user_id', $userId)
             ->orderByDesc('id')
-            ->skip(max(0, $historyDepth))
+            ->limit(max(0, $historyDepth))
             ->pluck('id');
 
-        if ($ids->isNotEmpty()) {
-            PasswordHistory::query()->whereIn('id', $ids)->delete();
+        $query = PasswordHistory::query()->where('user_id', $userId);
+
+        if ($keepIds->isNotEmpty()) {
+            $query->whereNotIn('id', $keepIds);
         }
+
+        $query->delete();
     }
 }

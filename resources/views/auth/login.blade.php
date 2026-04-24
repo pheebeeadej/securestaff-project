@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecureStaff Login</title>
+    <title>Yabatech SecureStaff Management System Login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -12,7 +12,7 @@
     <div class="login-screen">
     <div class="login-wrap">
         <section class="hero">
-            <h1>SharpInsights</h1>
+            <h1>SecureStaff</h1>
             <p>Employee management system with integrated password policy enforcement.</p>
             <div class="badge">Strong passwords, attendance, leave, payroll, and notices in one portal.</div>
             <div class="badge">Laravel 10 + Sanctum authentication with policy-aware password changes.</div>

@@ -38,7 +38,7 @@
 
         <div class="panel">
             <h3 style="margin-top:0;">Today's Stats</h3>
-            <p class="muted">From SharpInsights</p>
+            <p class="muted">From SecureStaff</p>
             @php
                 $score = $employeeCount > 0 ? (int) round(($presentToday / max(1, $employeeCount)) * 100) : 0;
             @endphp

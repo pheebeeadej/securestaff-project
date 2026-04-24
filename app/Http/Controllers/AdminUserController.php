@@ -51,7 +51,7 @@ class AdminUserController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'department' => $data['department'],
-            'role' => $data['role'],
+            'role' => $data['role'], 
             'password' => Hash::make($data['password']),
             'must_change_password' => true,
             'password_changed_at' => null,
