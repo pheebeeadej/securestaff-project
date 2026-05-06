@@ -22,3 +22,17 @@ Performance evaluation
 Staff document upload 
 Admin dashboard with reports
 
+
+=======================================================
+Tech stack used in this project
+PHP 8.x (Laravel 10 framework)
+Laravel 10 (MVC backend, routing, controllers, Blade views, migrations/seeders)
+SQL database via MySQL/MariaDB (configured as DB_CONNECTION=mysql)
+HTML (Blade templates: .blade.php)
+CSS (resources/css/app.css)
+JavaScript (resources/js/app.js)
+Vite (frontend build tool)
+Node.js + npm (to run Vite dev/build)
+Composer (PHP dependency manager: composer.json)
+Mail (SMTP) (configured in .env, used for OTP + credentials emails)
+Laravel Sanctum (API token auth; present in the project)

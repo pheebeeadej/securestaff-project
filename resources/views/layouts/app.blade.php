@@ -42,7 +42,7 @@
             </div>
 
             @if(session('status'))
-                <div class="panel" style="margin-bottom:16px; border-left:4px solid #21d4d8;">{{ session('status') }}</div>
+                <div class="panel" style="margin-bottom:16px; border-left:4px solid var(--accent);">{{ session('status') }}</div>
             @endif
 
             @yield('content')
